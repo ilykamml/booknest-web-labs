@@ -1,0 +1,68 @@
+:root {
+  color-scheme: light dark;
+  --paper: #fafaf8;
+  --surface: #fff;
+  --form-paper: #fffcf5;
+  --ink: #202125;
+  --muted: #666a70;
+  --line: #e4e5e7;
+  --field: #f4f5f6;
+  --accent: #275dab;
+  --accent-soft: #eef3fb;
+  --danger: #b74435;
+  --shadow: 0 12px 20px -12px #0004;
+  --spine: #0004;
+  --shine: #fff7;
+  --shelf-brightness: 1;
+  --space-1: .25rem;
+  --space-2: .5rem;
+  --space-3: .75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4rem;
+  --radius: .75rem;
+  --pill: 99rem;
+  --font: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --text: 1rem;
+  --small: .875rem;
+  --heading: clamp(1.75rem, 4vw, 2.75rem);
+  --content: 72rem;
+  --form-width: 42rem;
+  --card-min: 14rem;
+  --cover-width: 10.5rem;
+  --cover-height: 14rem;
+  --cover-large: 14rem;
+  --field-height: 2.75rem;
+  --shelf-height: 1.15rem;
+  --rule: 1px;
+  --brand-size: 1.75rem;
+  --section-size: 1.25rem;
+  --shelf-title-size: 1.125rem;
+  --body-leading: 1.6;
+  --heading-leading: 1.15;
+  --card-leading: 1.4;
+  --heading-tracking: -.035em;
+  --brand-tracking: -.06em;
+  --focus-width: 3px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper: #17191c;
+    --surface: #202329;
+    --form-paper: #24241f;
+    --ink: #eff0f2;
+    --muted: #a4a8b0;
+    --line: #373b42;
+    --field: #2b2f36;
+    --accent: #a4c6fc;
+    --accent-soft: #293a50;
+    --danger: #f59b88;
+    --shadow: 0 12px 20px -12px #000b;
+    --spine: #0007;
+    --shine: #fff4;
+    --shelf-brightness: .7;
+  }
+}

@@ -1,0 +1,22 @@
+* { box-sizing: border-box; }
+body, h1, h2, h3, p, figure, dl, dd, ol, ul { margin: 0; }
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font: var(--text)/var(--body-leading) var(--font);
+}
+h1 { font-size: var(--heading); line-height: var(--heading-leading); letter-spacing: var(--heading-tracking); }
+h2 { font-size: var(--section-size); line-height: 1.3; }
+h3 { font-size: var(--text); line-height: var(--card-leading); }
+a { color: var(--accent); text-underline-offset: var(--space-1); }
+img { max-width: 100%; height: auto; display: block; }
+button, input, select, textarea { font: inherit; }
+button, .button, summary { cursor: pointer; }
+:focus-visible {
+  outline: var(--focus-width) solid var(--accent);
+  outline-offset: var(--space-1);
+  border-radius: var(--space-1);
+}
+button:disabled, fieldset:disabled { cursor: not-allowed; }
+small, figcaption { color: var(--muted); font-size: var(--small); }
+/* Анимаций нет; режим уменьшенного движения не требует исключений. */

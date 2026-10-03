@@ -4,18 +4,22 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Оформление выдачи — BookNest</title>
+  <link rel="stylesheet" href="styles/tokens.css">
+  <link rel="stylesheet" href="styles/base.css">
+  <link rel="stylesheet" href="styles/layout.css">
+  <link rel="stylesheet" href="styles/components.css">
 </head>
-<body>
-<a href="#main">К содержанию</a>
-<header>
-  <p><strong>BookNest</strong> — университетская библиотека</p>
-  <nav aria-label="Основная навигация"><a href="index.html">Каталог</a> <a href="book.html">Карточка книги</a> <a href="loan.html">Оформление выдачи</a></nav>
+<body class="page page--loan">
+<a class="skip-link" href="#main">К содержанию</a>
+<header class="site-header">
+  <p class="brand"><strong>BookNest</strong> — университетская библиотека</p>
+  <nav class="site-nav" aria-label="Основная навигация"><a href="index.html">Каталог</a> <a href="book.html">Карточка книги</a> <a href="loan.html">Оформление выдачи</a></nav>
 </header>
-<main id="main">
-<nav aria-label="Хлебные крошки"><ol><li><a href="index.html">Каталог</a></li><li><a href="book.html">Базы данных</a></li><li>Выдача</li></ol></nav>
+<main class="main main--loan" id="main">
+<nav class="breadcrumbs" aria-label="Хлебные крошки"><ol><li><a href="index.html">Каталог</a></li><li><a href="book.html">Базы данных</a></li><li>Выдача</li></ol></nav>
 <h1>Оформление выдачи</h1>
 <p>Форма для получения печатного экземпляра в университетской библиотеке.</p>
-<form aria-describedby="loan-note">
+<form class="loan-form" aria-describedby="loan-note">
   <fieldset><legend>Читатель</legend>
     <p><label for="reader">Имя и фамилия</label><br><input id="reader" name="reader" required maxlength="100" autocomplete="name"></p>
     <p><label for="email">Электронная почта</label><br><input id="email" name="email" type="email" required autocomplete="email"></p>
@@ -32,6 +36,6 @@
   <a href="book.html">Вернуться к книге</a>
 </form>
 </main>
-<footer><p>BookNest, Учебный макет университетской библиотеки. Данные демонстрационные.</p></footer>
+<footer class="site-footer"><p>BookNest, Учебный макет университетской библиотеки. Данные демонстрационные.</p></footer>
 </body>
 </html>

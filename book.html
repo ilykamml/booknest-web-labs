@@ -4,25 +4,29 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Базы данных — BookNest</title>
+  <link rel="stylesheet" href="styles/tokens.css">
+  <link rel="stylesheet" href="styles/base.css">
+  <link rel="stylesheet" href="styles/layout.css">
+  <link rel="stylesheet" href="styles/components.css">
 </head>
-<body>
-<a href="#main">К содержанию</a>
-<header>
-  <p><strong>BookNest</strong> — университетская библиотека</p>
-  <nav aria-label="Основная навигация"><a href="index.html">Каталог</a> <a href="book.html">Карточка книги</a> <a href="loan.html">Оформление выдачи</a></nav>
+<body class="page page--book">
+<a class="skip-link" href="#main">К содержанию</a>
+<header class="site-header">
+  <p class="brand"><strong>BookNest</strong> — университетская библиотека</p>
+  <nav class="site-nav" aria-label="Основная навигация"><a href="index.html">Каталог</a> <a href="book.html">Карточка книги</a> <a href="loan.html">Оформление выдачи</a></nav>
 </header>
-<main id="main">
-<nav aria-label="Хлебные крошки"><ol><li><a href="index.html">Каталог</a></li><li>Информационные системы</li><li>Базы данных</li></ol></nav>
-<article>
+<main class="main main--book" id="main">
+<nav class="breadcrumbs" aria-label="Хлебные крошки"><ol><li><a href="index.html">Каталог</a></li><li>Информационные системы</li><li>Базы данных</li></ol></nav>
+<article class="book-detail">
   <h1>Базы данных</h1>
-  <figure><img src="covers/database.svg" alt="Обложка демонстрационного учебника «Базы данных»" width="120" height="160"><figcaption>Учебник, Информационные системы, 3 курс</figcaption></figure>
-  <p>Учебная подборка о реляционных базах данных: от проектирования таблиц до SQL-запросов и транзакций.</p>
-  <p><a href="loan.html">Оформить выдачу</a></p>
-  <section aria-labelledby="specs"><h2 id="specs">О книге</h2>
+  <figure class="book-cover book-cover--large"><img src="covers/database.svg" alt="Обложка демонстрационного учебника «Базы данных»" width="120" height="160"><figcaption>Учебник, Информационные системы, 3 курс</figcaption></figure>
+  <p class="book-intro">Учебная подборка о реляционных базах данных: от проектирования таблиц до SQL-запросов и транзакций.</p>
+  <p class="book-action"><a class="button" href="loan.html">Оформить выдачу</a></p>
+  <section class="book-specs" aria-labelledby="specs"><h2 id="specs">О книге</h2>
     <dl><dt>Дисциплина</dt><dd>Базы данных в информационных системах</dd><dt>Курс</dt><dd>3</dd><dt>Язык</dt><dd>Русский</dd><dt>Формат</dt><dd>Печатный учебник</dd><dt>Содержание</dt><dd>Модели данных, нормализация, SQL, транзакции</dd></dl>
   </section>
-  <section aria-labelledby="reviews"><h2 id="reviews">Отзывы</h2>
-    <article><h3>Помог разобраться с SQL</h3><p>Читатель, <time datetime="2026-10-01">1 октября 2026</time></p><p>Удобно повторять материал перед лабораторными. Пример отзыва для макета.</p></article>
+  <section class="reviews" aria-labelledby="reviews"><h2 id="reviews">Отзывы</h2>
+    <article class="review"><h3>Помог разобраться с SQL</h3><p>Читатель, <time datetime="2026-10-01">1 октября 2026</time></p><p>Удобно повторять материал перед лабораторными. Пример отзыва для макета.</p></article>
     <h3>Оставить отзыв</h3>
     <p id="review-note">Сохранение отзывов появится позже.</p>
     <form aria-describedby="review-note">
@@ -32,8 +36,8 @@
     </form>
   </section>
 </article>
-<aside aria-labelledby="related"><h2 id="related">Для этой же учёбы</h2><ul><li><a href="index.html">Алгоритмы и структуры данных</a></li><li><a href="index.html">Современные веб-технологии</a></li></ul></aside>
+<aside class="related" aria-labelledby="related"><h2 id="related">Для этой же учёбы</h2><ul><li><a href="index.html">Алгоритмы и структуры данных</a></li><li><a href="index.html">Современные веб-технологии</a></li></ul></aside>
 </main>
-<footer><p>BookNest, Учебный макет университетской библиотеки. Данные демонстрационные.</p></footer>
+<footer class="site-footer"><p>BookNest, Учебный макет университетской библиотеки. Данные демонстрационные.</p></footer>
 </body>
 </html>
