@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Каталог — BookNest</title>
+</head>
+<body>
+<a href="#main">К содержанию</a>
+<header>
+  <p><strong>BookNest</strong> — университетская библиотека</p>
+  <nav aria-label="Основная навигация"><a href="index.html">Каталог</a> <a href="book.html">Карточка книги</a> <a href="loan.html">Оформление выдачи</a></nav>
+</header>
+<main id="main">
+<h1>Каталог</h1>
+<p>Выберите подборку для своей учёбы. На полках — книги, которые можно взять.</p>
+<section aria-labelledby="search-title">
+  <h2 id="search-title">Найти книгу</h2>
+  <p id="search-note">Поиск и фильтры появятся на следующем этапе. Сейчас можно раскрывать подборки ниже.</p>
+  <form aria-describedby="search-note">
+    <fieldset disabled>
+      <legend>Поиск и фильтры</legend>
+      <p><label for="q">Название или автор</label> <input id="q" name="q" type="search"></p>
+      <p><label for="genre">Жанр</label> <select id="genre" name="genre"><option value="all">Все</option><option value="textbook">Учебники</option><option value="reference">Справочники</option></select>
+      <label for="sort">Сортировка</label> <select id="sort" name="sort"><option value="title">По названию</option><option value="year">По году издания</option></select></p>
+      <p><input id="available" name="available" type="checkbox" checked><label for="available">Только доступные</label> <button type="submit">Найти</button></p>
+    </fieldset>
+  </form>
+</section>
+<section aria-labelledby="shelves"><h2 id="shelves">Учебные полки</h2>
+<details open><summary>Информационные системы, 2–3 курс</summary>
+  <table role="presentation">
+    <tbody>
+      <tr>
+        <td><article>
+          <figure><a href="book.html"><img src="covers/database.svg" alt="Обложка демонстрационного учебника «Базы данных»" width="180" height="240"></a></figure>
+          <h3><a href="book.html">Базы данных</a></h3>
+        </article></td>
+        <td><article>
+          <figure><a href="book.html"><img src="covers/algorithms.svg" alt="Обложка демонстрационного учебника «Алгоритмы и структуры данных»" width="180" height="240"></a></figure>
+          <h3><a href="book.html">Алгоритмы и структуры данных</a></h3>
+        </article></td>
+        <td><article>
+          <figure><a href="book.html"><img src="covers/web.svg" alt="Обложка демонстрационного учебника «Современные веб-технологии»" width="180" height="240"></a></figure>
+          <h3><a href="book.html">Современные веб-технологии</a></h3>
+        </article></td>
+      </tr>
+      <tr><td colspan="3"><img src="covers/shelf.svg" alt="" width="780" height="30"></td></tr>
+    </tbody>
+  </table>
+</details>
+<details><summary>Инженерные направления, 1–2 курс</summary>
+  <table role="presentation">
+    <tbody>
+      <tr>
+        <td><article>
+          <figure><a href="book.html"><img src="covers/math.svg" alt="Обложка демонстрационного учебника «Высшая математика»" width="180" height="240"></a></figure>
+          <h3><a href="book.html">Высшая математика</a></h3>
+        </article></td>
+        <td><article>
+          <figure><a href="book.html"><img src="covers/physics.svg" alt="Обложка демонстрационного учебника «Физика»" width="180" height="240"></a></figure>
+          <h3><a href="book.html">Физика</a></h3>
+        </article></td>
+        <td><article>
+          <figure><a href="book.html"><img src="covers/mechanics.svg" alt="Обложка демонстрационного учебника «Теоретическая механика»" width="180" height="240"></a></figure>
+          <h3><a href="book.html">Теоретическая механика</a></h3>
+        </article></td>
+      </tr>
+      <tr><td colspan="3"><img src="covers/shelf.svg" alt="" width="780" height="30"></td></tr>
+    </tbody>
+  </table>
+</details>
+</section>
+</main>
+<footer><p>BookNest, Учебный макет университетской библиотеки. Данные демонстрационные.</p></footer>
+</body>
+</html>
