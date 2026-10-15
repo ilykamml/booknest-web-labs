@@ -1,7 +1,7 @@
 import { books, genres } from './data/books.js';
 import { defaults, restore, toggleId } from './lib/books.js';
 import { render } from './ui/render.js';
-import { openBook, closeBook, checkout } from './ui/motion.js';
+import { openBook, closeBook, checkout, toggleShelf } from './ui/motion.js';
 
 const storageKey = 'booknest-v3';
 function readSaved() {
@@ -10,7 +10,7 @@ function readSaved() {
 }
 const state = {
   ...readSaved(), view: 'catalog', selected: null, phase: 'idle', notice: '', storageAvailable: true,
-  expanded: ['Информатика'], columns: innerWidth <= 650 ? 2 : 4,
+  closeRequested: false, expanded: [...genres], columns: innerWidth <= 650 ? 2 : 4,
 };
 let noticeTimer;
 function save() {
@@ -28,6 +28,7 @@ function reset() {
   state.filters = {...defaults}; state.view = 'catalog'; update();
 }
 async function close() {
+  if (state.phase === 'opening') { state.closeRequested = true; return; }
   if (state.phase !== 'idle') return;
   state.phase = 'closing';
   const id = state.selected;
@@ -42,6 +43,7 @@ async function open(id) {
   state.selected = id; state.phase = 'opening'; render(state);
   await openBook(source,document.querySelector('#detail-cover .book-jacket'),start);
   state.phase = 'idle'; render(state);
+  if (state.closeRequested) { state.closeRequested = false; await close(); return; }
   document.querySelector('[data-action="close"]').focus();
 }
 async function order(id) {
@@ -49,17 +51,27 @@ async function order(id) {
   if (!book?.available || state.orders.includes(id)) return;
   const rect = document.querySelector('#order-button').getBoundingClientRect();
   state.orders = [...state.orders,id]; state.phase = 'ordering'; update();
-  try { await checkout(document.querySelector('#detail-cover .book-jacket'),rect); }
+  try {
+    await checkout(document.querySelector('#detail-cover .book-jacket'),rect,() => {
+      state.selected = null;
+      state.view = 'catalog';
+      render(state);
+    });
+  }
   finally {
     state.phase = 'idle'; state.selected = null; state.view = 'catalog'; render(state);
     document.querySelector(`[data-book="${id}"] .book-open`)?.focus({preventScroll:true});
-    notify(`«${book.title}» в вашей корзине. ${state.storageAvailable ? 'Заявка сохранена на устройстве.' : 'Выбор сохранится до закрытия страницы.'}`);
+    notify(state.storageAvailable ? 'Добавлено в корзину' : 'Хранилище недоступно');
   }
 }
 document.addEventListener('click',async event => {
   const target = event.target.closest('[data-action],[data-view]');
   if (!target) return;
-  if (state.phase !== 'idle') { event.preventDefault(); return; }
+  if (state.phase !== 'idle') {
+    event.preventDefault();
+    if (target.dataset.action === 'close' && state.phase === 'opening') state.closeRequested = true;
+    return;
+  }
   if (target.dataset.view) {
     state.view = target.dataset.view; state.filters = {...defaults}; update();
     document.querySelector('.collection').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth'});
@@ -78,8 +90,14 @@ document.addEventListener('click',async event => {
     case 'reset': reset(); break;
     case 'expand':
       event.preventDefault();
-      state.expanded = state.expanded.includes(target.dataset.genre) ? state.expanded.filter(item => item !== target.dataset.genre) : [...state.expanded,target.dataset.genre];
-      render(state); break;
+      {
+        const genre = target.dataset.genre;
+        const group = target.closest('.shelf-group');
+        const expanded = group.dataset.expanded ? group.dataset.expanded !== 'true' : !group.open;
+        state.expanded = expanded ? [...state.expanded,genre] : state.expanded.filter(item => item !== genre);
+        await toggleShelf(group,expanded);
+      }
+      break;
   }
 });
 const form = document.querySelector('#filters');
@@ -102,6 +120,3 @@ window.addEventListener('resize',() => {
   if (columns !== state.columns && state.phase === 'idle') { state.columns = columns; render(state); }
 });
 render(state);
-// До первой заявки изображения корзины уже будут декодированы браузером.
-const preload = document.createElement('link');
-preload.rel = 'preload'; preload.as = 'image'; preload.href = 'assets/basket.webp'; document.head.append(preload);

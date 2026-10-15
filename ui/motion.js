@@ -5,43 +5,43 @@ function flyer(source, rect) {
   const node = document.createElement('div');
   node.className = 'flying-book';
   node.style.cssText = `left:${rect.left}px;top:${rect.top}px;width:${rect.width}px;height:${rect.height}px`;
-  const copy = source.cloneNode(true);
-  for (const [original,clone] of [[source,copy],...Array.from(source.children,(child,i) => [child,copy.children[i]])]) {
-    const style = getComputedStyle(original);
-    clone.style.fontSize = style.fontSize;
-    clone.style.padding = style.padding;
-  }
-  node.style.transformOrigin = 'top left';
-  node.append(copy);
+  node.append(source.cloneNode(true));
   document.querySelector('#effects').append(node);
   return node;
 }
-export async function openBook(source, target, start) {
+export async function openBook(source,target,start) {
   if (reduced() || !source || !target) return;
   const end = target.getBoundingClientRect();
   const ghost = flyer(source,start);
   target.style.visibility = 'hidden';
   const dialog = document.querySelector('#book-dialog');
-  // Верхний слой dialog всегда выше обычного DOM; перелёт временно живёт внутри него.
   dialog.append(ghost);
-  const copy = document.querySelector('#detail-copy');
   await Promise.all([
-    animate(ghost,[{transform:'translate(0,0) rotate(-2deg)'},{transform:`translate(${end.left-start.left}px,${end.top-start.top}px) scale(${end.width/start.width}) rotate(0)`}],760),
-    animate(copy,[{opacity:0,transform:'translateY(22px)'},{opacity:1,transform:'translateY(0)'}],620,{delay:220}),
+    animate(ghost,[{transform:'translate(0,0) scale(1)'},{transform:`translate(${end.left-start.left}px,${end.top-start.top}px) scale(${end.width/start.width})`}],650),
+    animate(document.querySelector('#detail-copy'),[{opacity:0,transform:'translateX(18px)'},{opacity:1,transform:'translateX(0)'}],420,{delay:150}),
   ]);
   target.style.visibility = '';
   ghost.remove();
 }
-export async function closeBook(source, target) {
-  if (reduced() || !source || !target) return;
+export async function closeBook(source,target) {
+  const dialog = document.querySelector('#book-dialog');
+  if (reduced() || !source || !target) { dialog.close(); return; }
   const start = source.getBoundingClientRect();
   const end = target.getBoundingClientRect();
   const ghost = flyer(source,start);
-  document.querySelector('#book-dialog').append(ghost);
-  source.style.visibility = 'hidden';
-  await animate(ghost,[{transform:'translate(0,0)'},{transform:`translate(${end.left-start.left}px,${end.top-start.top}px) scale(${end.width/start.width})`,opacity:.15}],450);
-  source.style.visibility = '';
-  ghost.remove();
+  const panel = document.createElement('div'); panel.className = 'closing-panel';
+  const face = document.createElement('div'); face.className = 'closing-card';
+  const bounds = dialog.getBoundingClientRect();
+  face.style.cssText = `left:${bounds.left}px;top:${bounds.top}px;width:${bounds.width}px;height:${bounds.height}px`;
+  face.append(...Array.from(dialog.children,node => node.cloneNode(true)));
+  face.querySelector('#detail-cover').style.visibility = 'hidden';
+  panel.append(face); document.querySelector('#effects').prepend(panel);
+  dialog.close();
+  await Promise.all([
+    animate(ghost,[{transform:'translate(0,0) scale(1)'},{transform:`translate(${end.left-start.left}px,${end.top-start.top}px) scale(${end.width/start.width})`}],550),
+    animate(panel,[{opacity:1},{opacity:0}],180),
+  ]);
+  ghost.remove(); panel.remove();
 }
 async function confetti(rect, color) {
   const layer = document.querySelector('#effects');
@@ -61,35 +61,57 @@ async function confetti(rect, color) {
   await Promise.all(nodes.map(node => node.finished));
   nodes.forEach(node => node.piece.remove());
 }
-export async function checkout(source, buttonRect) {
-  if (reduced()) return;
+export async function toggleShelf(group,expanded) {
+  const content = group.querySelector('.shelf-content');
+  const start = group.open ? content.getBoundingClientRect().height : 0;
+  content.getAnimations().forEach(animation => animation.cancel());
+  group.dataset.expanded = String(expanded);
+  group.open = true;
+  if (!reduced()) {
+    content.style.overflow = 'clip';
+    const animation = content.animate([
+      {height:`${start}px`,opacity:start ? 1 : 0,transform:start ? 'translateY(0)' : 'translateY(-12px)'},
+      {height:expanded ? `${content.scrollHeight}px` : '0px',opacity:expanded ? 1 : 0,transform:expanded ? 'translateY(0)' : 'translateY(-12px)'},
+    ],{duration:420,easing:ease,fill:'both'});
+    try { await animation.finished; } catch { return; }
+    if (group.dataset.expanded !== String(expanded)) return;
+    group.open = expanded;
+    animation.cancel();
+    content.style.overflow = '';
+  } else group.open = expanded;
+}
+export async function checkout(source,buttonRect,onReturn) {
+  if (reduced()) { onReturn(); return; }
   const rect = source.getBoundingClientRect();
   const ghost = flyer(source,rect);
   document.querySelector('#book-dialog').close();
   const stage = document.querySelector('#checkout-stage');
-  const front = stage.querySelector('.basket-front');
-  // Выносим переднюю стенку выше летящей книги: книга действительно скрывается за плетением.
-  document.body.append(front);
-  front.style.zIndex = '101';
-  const basket = front.getBoundingClientRect();
+  const basket = stage.querySelector('.basket');
+  const bounds = basket.getBoundingClientRect();
+  const rim = bounds.top + bounds.height * .455;
   const centerX = innerWidth / 2 - rect.width / 2;
-  const centerY = Math.max(55,innerHeight * .14);
-  const burst = confetti(buttonRect,getComputedStyle(document.documentElement).getPropertyValue('--accent'));
+  const centerY = Math.max(45,innerHeight * .12);
+  const center = `translate(${centerX-rect.left}px,${centerY-rect.top}px) scale(1.08)`;
+  const burst = confetti(buttonRect,'#2863c5');
+  const mask = document.createElement('div'); mask.className = 'book-mask';
+  mask.style.clipPath = `polygon(0 0,100% 0,100% ${rim}px,0 ${rim}px)`;
   try {
     await Promise.all([
-      animate(stage,[{opacity:0},{opacity:1}],360),
-      animate(front,[{transform:'translateY(130px)',opacity:0},{transform:'translateY(0)',opacity:1}],700),
-      animate(ghost,[{transform:'translate(0,0) rotate(0)'},{transform:`translate(${centerX-rect.left}px,${centerY-rect.top}px) scale(1.12) rotate(-7deg)`}],850),
+      animate(stage,[{opacity:0},{opacity:1}],220),
+      animate(basket,[{transform:'translateY(90px)',opacity:0},{transform:'translateY(0)',opacity:1}],600),
+      animate(ghost,[{transform:'translate(0,0) scale(1)'},{transform:center}],750),
     ]);
-    const dropX = innerWidth / 2 - rect.width / 2 - rect.left;
-    const dropY = basket.top + basket.height * .52 - rect.top;
-    await animate(ghost,[{transform:`translate(${centerX-rect.left}px,${centerY-rect.top}px) scale(1.12) rotate(-7deg)`,opacity:1},{transform:`translate(${dropX}px,${dropY}px) scale(.67) rotate(13deg)`,opacity:1,offset:.86},{transform:`translate(${dropX}px,${dropY+35}px) scale(.62) rotate(14deg)`,opacity:0}],720,{easing:'cubic-bezier(.55,.02,.84,.4)'});
-    await Promise.all([animate(front,[{transform:'translateY(0)'},{transform:'translateY(110vh)'}],720),animate(stage,[{opacity:1},{opacity:0}],720),burst]);
+    ghost.before(mask); mask.append(ghost);
+    // Книга скрывается за краем корзины, а не уходит сквозь её дно.
+    await animate(ghost,[{transform:center},{transform:`translate(${centerX-rect.left}px,${rim-rect.top+6}px) scale(.72) rotateX(62deg) rotateZ(6deg)`}],680,{easing:'cubic-bezier(.5,.04,.9,.5)'});
+    await animate(basket,[{transform:'translateY(0) scale(1)'},{transform:'translateY(5px) scale(1.025,.97)',offset:.4},{transform:'translateY(0) scale(1)'}],240);
+    // Возвращаем книгу, пока непрозрачная сцена закрывает каталог.
+    onReturn();
+    await Promise.all([animate(stage,[{transform:'translateY(0)',opacity:1},{transform:'translateY(65vh)',opacity:0}],600),burst]);
   } finally {
-    ghost.remove();
-    stage.append(front);
-    front.style.zIndex = '';
-    front.getAnimations().forEach(animation => animation.cancel());
+    ghost.remove(); mask.remove();
+    stage.hidden = true;
+    basket.getAnimations().forEach(animation => animation.cancel());
     stage.getAnimations().forEach(animation => animation.cancel());
   }
 }

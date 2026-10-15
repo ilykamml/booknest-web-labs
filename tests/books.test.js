@@ -3,8 +3,10 @@ import assert from 'node:assert/strict';
 import { books, genres } from '../data/books.js';
 import { defaults, selectBooks, restore, toggleId } from '../lib/books.js';
 
-test('40 уникальных настоящих книг и пять направлений',() => {
-  assert.equal(books.length,40); assert.equal(new Set(books.map(book => book.id)).size,40); assert.equal(genres.length,5);
+test('40 доступных книг на полках, ещё пять в поиске, пять направлений',() => {
+  assert.equal(books.length,45); assert.equal(new Set(books.map(book => book.id)).size,45); assert.equal(genres.length,5);
+  assert.equal(selectBooks(books,defaults).length,40);
+  for (const genre of genres) assert.equal(selectBooks(books,{...defaults,genre}).length,8);
 });
 test('поиск, жанр и наличие сочетаются, сортировка не меняет исходный массив',() => {
   const before = JSON.stringify(books);

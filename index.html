@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#f7f6f2">
-  <title>BookNest — книги для любопытных</title>
+  <meta name="theme-color" content="#ffffff">
+  <title>BookNest</title>
   <link rel="stylesheet" href="styles/tokens.css">
   <link rel="stylesheet" href="styles/base.css">
   <link rel="stylesheet" href="styles/layout.css">
@@ -15,42 +15,35 @@
 <body>
 <a class="skip-link" href="#main">К содержанию</a>
 <header class="site-header">
-  <a class="brand" href="index.html" aria-label="BookNest, на главную"><span class="brand-mark" aria-hidden="true">b</span>BookNest<span class="brand-note">Университетская библиотека</span></a>
+  <a class="brand" href="index.html">BookNest</a>
   <nav class="site-nav" aria-label="Основная навигация">
-    <button data-view="catalog" aria-current="page">Полки</button>
+    <button data-view="catalog" aria-current="page">Каталог</button>
     <button data-view="wishlist">Мой список <span id="wish-count">0</span></button>
-    <button data-view="orders">Моя корзина <span id="order-count">0</span></button>
+    <button data-view="orders">Корзина <span id="order-count">0</span></button>
   </nav>
 </header>
 <main id="main">
-  <section class="intro" aria-labelledby="page-title">
-    <p class="eyebrow">Место для хороших мыслей</p>
-    <h1 id="page-title">Любопытство<br>начинается <em>с полки.</em></h1>
-    <p class="intro-note">Найдите книгу, с которой захочется<br>задержаться чуть дольше.</p>
-    <div class="library-stamp" aria-hidden="true"><span>BOOKNEST</span><b>40</b><span>КНИГ ДЛЯ ВАС</span></div>
-  </section>
   <section class="collection" aria-labelledby="collection-title">
     <form id="filters" class="filter-bar" role="search" aria-label="Поиск и фильтры книг">
-      <label class="search-field"><span aria-hidden="true">⌕</span><input name="query" type="search" placeholder="Название, автор или тема" aria-label="Название или автор" maxlength="160" autocomplete="off"><kbd aria-hidden="true">⌘ K</kbd></label>
+      <label class="search-field"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 4.5 4.5"/></svg><input name="query" type="search" placeholder="Название, автор или тема" aria-label="Название или автор" maxlength="160" autocomplete="off"></label>
       <label class="select-field"><span>Направление</span><select name="genre" aria-label="Направление"><option value="">Все направления</option></select></label>
       <label class="select-field"><span>Порядок на полке</span><select name="sort" aria-label="Сортировка"><option value="shelf">Выбор библиотеки</option><option value="title">По названию А–Я</option><option value="year">Сначала новые</option><option value="rating">По рейтингу</option></select></label>
-      <label class="check-field"><input name="available" type="checkbox">Только доступные</label>
+      <label class="check-field" id="availability-filter" hidden><input name="available" type="checkbox">Только доступные</label>
       <button class="reset-button" type="reset">Сбросить</button>
     </form>
-    <div class="collection-heading"><h2 id="collection-title">На наших полках</h2><p id="result-count" role="status" aria-live="polite"></p></div>
+    <div class="collection-heading"><h1 id="collection-title">Каталог</h1><p id="result-count" role="status" aria-live="polite"></p></div>
     <div id="shelves"></div>
   </section>
 </main>
-<footer class="site-footer"><span>BookNest <span class="footer-line">Тише. Здесь рождаются идеи.</span></span><p>Учебный каталог. Наличие, рейтинги и заявки — демонстрационные.<br>Книги настоящие, оформление обложек — BookNest.</p></footer>
 <dialog id="book-dialog" aria-labelledby="detail-title">
-  <div class="detail-toolbar"><span class="eyebrow">Побудьте с этой книгой</span><button class="icon-button" data-action="close" aria-label="Закрыть карточку">×</button></div>
+  <div class="detail-toolbar"><span></span><button class="icon-button" data-action="close" aria-label="Закрыть карточку"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="m6 6 12 12M18 6 6 18"/></svg></button></div>
   <article class="detail-layout"><div id="detail-cover" class="detail-cover"></div><div id="detail-copy" class="detail-copy"></div></article>
 </dialog>
 <div id="checkout-stage" class="checkout-stage" hidden aria-hidden="true">
-  <div class="basket-back"></div><div class="basket-front"></div><p>Уже в вашей корзине.</p>
+  <img class="basket" src="assets/basket.webp" alt="" width="1254" height="1254">
 </div>
 <div id="effects" class="effects" aria-hidden="true"></div>
 <p id="notice" class="notice" role="status" aria-live="polite"></p>
-<noscript><p>Включите JavaScript, чтобы открыть интерактивный каталог из 40 книг.</p></noscript>
+<noscript><p>Включите JavaScript, чтобы открыть интерактивный каталог.</p></noscript>
 </body>
 </html>
