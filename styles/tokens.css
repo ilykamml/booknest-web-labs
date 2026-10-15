@@ -1,0 +1,7 @@
+:root {
+  color-scheme: light;
+  --paper: #fff; --surface: #fff; --ink: #202124; --muted: #697078;
+  --line: #e9eaec; --accent: #2863c5; --accent-ink: #fff; --field: #f5f6f7;
+  --font: Arial, Helvetica, sans-serif; --content: 1180px;
+  --ease: cubic-bezier(.22,.8,.25,1);
+}

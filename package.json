@@ -1,0 +1,1 @@
+{"name":"booknest-web-labs","private":true,"type":"module","scripts":{"start":"python3 -m http.server 5173","lint":"eslint .","test":"node --test tests/books.test.js"},"devDependencies":{"eslint":"^9.0.0"}}
