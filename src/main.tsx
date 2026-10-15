@@ -1,0 +1,10 @@
+import { createRoot } from 'react-dom/client';
+import App from './App';
+import './styles/tokens.css';
+import './styles/base.css';
+import './styles/layout.css';
+import './styles/components.css';
+import './styles/motion.css';
+import './styles/states.css';
+const root = document.getElementById('root');
+if (root) createRoot(root).render(<App />);

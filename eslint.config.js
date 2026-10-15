@@ -1,8 +1,16 @@
-export default [{
-  files: ['**/*.js'],
-  languageOptions: { ecmaVersion: 2022, sourceType: 'module', globals: Object.fromEntries([
-    'document','window','localStorage','matchMedia','requestAnimationFrame','setTimeout','clearTimeout',
-    'innerWidth','innerHeight','HTMLElement','Element','console','URLSearchParams','location','history','getComputedStyle',
-  ].map(name => [name, 'readonly'])) },
-  rules: { 'no-unused-vars': 'error', 'no-undef': 'error', 'no-var': 'error', 'prefer-const': 'error', 'eqeqeq': 'error' },
-}];
+import js from '@eslint/js';
+import globals from 'globals';
+import tseslint from 'typescript-eslint';
+import hooks from 'eslint-plugin-react-hooks';
+import refresh from 'eslint-plugin-react-refresh';
+export default tseslint.config({ ignores: ['dist/**'] }, js.configs.recommended, ...tseslint.configs.recommended, {
+  files: ['**/*.{ts,tsx}'],
+  languageOptions: { globals: { ...globals.browser, ...globals.node } },
+  plugins: { 'react-hooks': hooks, 'react-refresh': refresh },
+  rules: {
+    'react-hooks/rules-of-hooks': 'error',
+    'react-hooks/exhaustive-deps': 'error',
+    'react-refresh/only-export-components': ['error', { allowConstantExport: true }],
+    '@typescript-eslint/no-explicit-any': 'error',
+  },
+});

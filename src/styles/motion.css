@@ -1,0 +1,71 @@
+.book-card.is-selected .book-open {
+  visibility: hidden;
+}
+.book-open:hover .book-jacket {
+  box-shadow: 4px 6px 14px #20202033;
+}
+.effects {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 100;
+  overflow: clip;
+}
+.flying-book {
+  position: fixed;
+  transform-origin: 0 0;
+  pointer-events: none;
+  z-index: 3;
+}
+.flying-book .book-jacket {
+  width: 100%;
+  height: 100%;
+  aspect-ratio: auto;
+}
+.confetti {
+  position: fixed;
+  width: 8px;
+  height: 6px;
+  border-radius: 1px;
+}
+.checkout-stage {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 80;
+  background: #fff;
+}
+.basket {
+  position: fixed;
+  width: min(360px, 80vw);
+  height: auto;
+  left: 50%;
+  top: 56%;
+  translate: -50% -26%;
+}
+.book-mask {
+  position: fixed;
+  inset: 0;
+}
+.closing-panel {
+  position: fixed;
+  inset: 0;
+  background: #ffffffdf;
+  z-index: 1;
+}
+.closing-card {
+  position: fixed;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  overflow: hidden;
+}
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0s;
+    animation-duration: 0s;
+    scroll-behavior: auto;
+  }
+}
