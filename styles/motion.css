@@ -1,0 +1,23 @@
+.book-jacket { transition: transform 450ms var(--ease),box-shadow 450ms var(--ease); }
+.book-open:hover .book-jacket,.book-open:focus-visible .book-jacket { transform: translateY(-14px) rotate(-4deg); box-shadow: inset 8px 0 8px #0004,3px 2px #d5cebd,5px 4px #ece6d9,12px 22px 22px #2e302130; }
+.site-nav button,.wish-button,.primary-button { transition: background var(--fast),transform var(--fast); }
+.primary-button:hover:not(:disabled) { transform: translateY(-2px); }
+.primary-button:active:not(:disabled) { transform: scale(.97); }
+.effects { position: fixed; inset: 0; pointer-events: none; z-index: 100; overflow: clip; }
+.flying-book { position: fixed; pointer-events: none; z-index: 3; }
+.flying-book .book-jacket { width: 100%; height: 100%; transform: none; transition: none; }
+.book-card.is-selected .book-open { visibility: hidden; }
+.confetti { position: fixed; width: 9px; height: 7px; border-radius: 1px; }
+.checkout-stage { position: fixed; inset: 0; pointer-events: none; z-index: 80; background: var(--paper); }
+.basket-back,.basket-front { position: absolute; width: min(390px,80vw); height: min(390px,80vw); left: 50%; top: 50%; translate: -50% -12%; background: url('../assets/basket.webp') center / contain no-repeat; }
+.basket-back { clip-path: inset(0 0 55% 0); }
+.basket-front { clip-path: inset(45% 0 0 0); z-index: 110; }
+.checkout-stage p { position: absolute; text-align: center; width: 100%; top: 8%; font: italic 26px var(--serif); }
+body.is-checkout .effects { z-index: 90; }
+body.is-checkout .basket-front { position: fixed; z-index: 101; }
+@media (prefers-reduced-motion: reduce) {
+  *,*::before,*::after { transition-duration: 0s; animation-duration: 0s; scroll-behavior: auto; }
+  .book-open:hover .book-jacket { transform: none; }
+}
+
+body.is-checkout { overflow: hidden; }

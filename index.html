@@ -3,79 +3,54 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Каталог — BookNest</title>
+  <meta name="theme-color" content="#f7f6f2">
+  <title>BookNest — книги для любопытных</title>
   <link rel="stylesheet" href="styles/tokens.css">
   <link rel="stylesheet" href="styles/base.css">
   <link rel="stylesheet" href="styles/layout.css">
   <link rel="stylesheet" href="styles/components.css">
+  <link rel="stylesheet" href="styles/motion.css">
+  <script type="module" src="main.js"></script>
 </head>
-<body class="page page--index">
+<body>
 <a class="skip-link" href="#main">К содержанию</a>
 <header class="site-header">
-  <p class="brand"><strong>BookNest</strong> — университетская библиотека</p>
-  <nav class="site-nav" aria-label="Основная навигация"><a href="index.html">Каталог</a> <a href="book.html">Карточка книги</a> <a href="loan.html">Оформление выдачи</a></nav>
+  <a class="brand" href="index.html" aria-label="BookNest, на главную"><span class="brand-mark" aria-hidden="true">b</span>BookNest<span class="brand-note">Университетская библиотека</span></a>
+  <nav class="site-nav" aria-label="Основная навигация">
+    <button data-view="catalog" aria-current="page">Полки</button>
+    <button data-view="wishlist">Мой список <span id="wish-count">0</span></button>
+    <button data-view="orders">Моя корзина <span id="order-count">0</span></button>
+  </nav>
 </header>
-<main class="main main--index" id="main">
-<h1>Каталог</h1>
-<p>Выберите подборку для своей учёбы. На полках — книги, которые можно взять.</p>
-<section class="search-panel" aria-labelledby="search-title">
-  <h2 id="search-title">Найти книгу</h2>
-  <p id="search-note">Поиск и фильтры появятся на следующем этапе. Сейчас можно раскрывать подборки ниже.</p>
-  <form aria-describedby="search-note">
-    <fieldset disabled>
-      <legend>Поиск и фильтры</legend>
-      <p><label for="q">Название или автор</label> <input id="q" name="q" type="search"></p>
-      <p><label for="genre">Жанр</label> <select id="genre" name="genre"><option value="all">Все</option><option value="textbook">Учебники</option><option value="reference">Справочники</option></select>
-      <label for="sort">Сортировка</label> <select id="sort" name="sort"><option value="title">По названию</option><option value="year">По году издания</option></select></p>
-      <p><input id="available" name="available" type="checkbox" checked><label for="available">Только доступные</label> <button type="submit">Найти</button></p>
-    </fieldset>
-  </form>
-</section>
-<section class="shelves" aria-labelledby="shelves"><h2 id="shelves">Учебные полки</h2>
-<details class="shelf" open><summary>Информационные системы, 2–3 курс</summary>
-  <table class="book-grid" role="presentation">
-    <tbody>
-      <tr>
-        <td><article class="book-card">
-          <figure class="book-cover"><a href="book.html"><img src="covers/database.svg" alt="Обложка демонстрационного учебника «Базы данных»" width="180" height="240"></a></figure>
-          <h3><a href="book.html">Базы данных</a></h3>
-        </article></td>
-        <td><article class="book-card">
-          <figure class="book-cover"><a href="book.html"><img src="covers/algorithms.svg" alt="Обложка демонстрационного учебника «Алгоритмы и структуры данных»" width="180" height="240"></a></figure>
-          <h3><a href="book.html">Алгоритмы и структуры данных</a></h3>
-        </article></td>
-        <td><article class="book-card">
-          <figure class="book-cover"><a href="book.html"><img src="covers/web.svg" alt="Обложка демонстрационного учебника «Современные веб-технологии»" width="180" height="240"></a></figure>
-          <h3><a href="book.html">Современные веб-технологии</a></h3>
-        </article></td>
-      </tr>
-      <tr class="shelf-original"><td colspan="3"><img src="covers/shelf.svg" alt="" width="780" height="30"></td></tr>
-    </tbody>
-  </table>
-</details>
-<details class="shelf"><summary>Инженерные направления, 1–2 курс</summary>
-  <table class="book-grid" role="presentation">
-    <tbody>
-      <tr>
-        <td><article class="book-card">
-          <figure class="book-cover"><a href="book.html"><img src="covers/math.svg" alt="Обложка демонстрационного учебника «Высшая математика»" width="180" height="240"></a></figure>
-          <h3><a href="book.html">Высшая математика</a></h3>
-        </article></td>
-        <td><article class="book-card">
-          <figure class="book-cover"><a href="book.html"><img src="covers/physics.svg" alt="Обложка демонстрационного учебника «Физика»" width="180" height="240"></a></figure>
-          <h3><a href="book.html">Физика</a></h3>
-        </article></td>
-        <td><article class="book-card">
-          <figure class="book-cover"><a href="book.html"><img src="covers/mechanics.svg" alt="Обложка демонстрационного учебника «Теоретическая механика»" width="180" height="240"></a></figure>
-          <h3><a href="book.html">Теоретическая механика</a></h3>
-        </article></td>
-      </tr>
-      <tr class="shelf-original"><td colspan="3"><img src="covers/shelf.svg" alt="" width="780" height="30"></td></tr>
-    </tbody>
-  </table>
-</details>
-</section>
+<main id="main">
+  <section class="intro" aria-labelledby="page-title">
+    <p class="eyebrow">Место для хороших мыслей</p>
+    <h1 id="page-title">Любопытство<br>начинается <em>с полки.</em></h1>
+    <p class="intro-note">Найдите книгу, с которой захочется<br>задержаться чуть дольше.</p>
+    <div class="library-stamp" aria-hidden="true"><span>BOOKNEST</span><b>40</b><span>КНИГ ДЛЯ ВАС</span></div>
+  </section>
+  <section class="collection" aria-labelledby="collection-title">
+    <form id="filters" class="filter-bar" role="search" aria-label="Поиск и фильтры книг">
+      <label class="search-field"><span aria-hidden="true">⌕</span><input name="query" type="search" placeholder="Название, автор или тема" aria-label="Название или автор" maxlength="160" autocomplete="off"><kbd aria-hidden="true">⌘ K</kbd></label>
+      <label class="select-field"><span>Направление</span><select name="genre" aria-label="Направление"><option value="">Все направления</option></select></label>
+      <label class="select-field"><span>Порядок на полке</span><select name="sort" aria-label="Сортировка"><option value="shelf">Выбор библиотеки</option><option value="title">По названию А–Я</option><option value="year">Сначала новые</option><option value="rating">По рейтингу</option></select></label>
+      <label class="check-field"><input name="available" type="checkbox">Только доступные</label>
+      <button class="reset-button" type="reset">Сбросить</button>
+    </form>
+    <div class="collection-heading"><h2 id="collection-title">На наших полках</h2><p id="result-count" role="status" aria-live="polite"></p></div>
+    <div id="shelves"></div>
+  </section>
 </main>
-<footer class="site-footer"><p>BookNest, Учебный макет университетской библиотеки. Данные демонстрационные.</p></footer>
+<footer class="site-footer"><span>BookNest <span class="footer-line">Тише. Здесь рождаются идеи.</span></span><p>Учебный каталог. Наличие, рейтинги и заявки — демонстрационные.<br>Книги настоящие, оформление обложек — BookNest.</p></footer>
+<dialog id="book-dialog" aria-labelledby="detail-title">
+  <div class="detail-toolbar"><span class="eyebrow">Побудьте с этой книгой</span><button class="icon-button" data-action="close" aria-label="Закрыть карточку">×</button></div>
+  <article class="detail-layout"><div id="detail-cover" class="detail-cover"></div><div id="detail-copy" class="detail-copy"></div></article>
+</dialog>
+<div id="checkout-stage" class="checkout-stage" hidden aria-hidden="true">
+  <div class="basket-back"></div><div class="basket-front"></div><p>Уже в вашей корзине.</p>
+</div>
+<div id="effects" class="effects" aria-hidden="true"></div>
+<p id="notice" class="notice" role="status" aria-live="polite"></p>
+<noscript><p>Включите JavaScript, чтобы открыть интерактивный каталог из 40 книг.</p></noscript>
 </body>
 </html>
